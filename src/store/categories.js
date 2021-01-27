@@ -1,6 +1,6 @@
 let initialState = {
   categories: [
-    { name: 'electronics', displayName: 'Elecronics' },
+    { name: 'electronics', displayName: 'Electronics' },
     { name: 'food', displayName: 'Food' },
     { name: 'clothing', displayName: 'Clothing' },
   ],
@@ -13,7 +13,8 @@ let initialState = {
     { name: 'Eggs', category: 'food', price: 1.99, inStock: 12 },
     { name: 'Bread', category: 'food', price: 2.39, inStock: 90 },
   ],
-  activeCategory: ''
+  activeCategory: '',
+  cart: [],
 };
 
 export const showCategory = () => {
@@ -22,27 +23,73 @@ export const showCategory = () => {
   }
 }
 
-export const displayProducts = (category) => {
+export const saveProducts = (category) => {
+  console.log('name of category', category)
   return {
-    type: 'DISPLAY',
-    payload: category,
+    type: 'SAVE',
+    payload: category.name,
   }
 }
 
-let categorySwitchboard = (state = initialState, action) => {
-  console.log(state);
-  let { type } = action;
+export const addToCart = (product) => {
+  console.log(product);
+  return {
+    type: 'ADDTOCART',
+    payload: product.name
+  }
+}
+
+export const removeFromCart = (product) => {
+  return {
+    type: 'REMOVEFROMCART',
+    payload: product.name
+  }
+}
+
+// eslint-disable-next-line import/no-anonymous-default-export
+export default (state = initialState, action) => {
+  let { type, payload } = action;
+  console.log(action)
+  if (!action.payload) {
+    console.log(state, action);
+  } else {
+    console.log(action)
+  }
   switch (type) {
     case 'CATEGORIES':
 
       return initialState;
+
+    case 'SAVE':
+
+      return {
+        ...state,
+        activeCategory: payload,
+
+      };
+
+    case 'ADDTOCART':
+
+      return {
+        ...state,
+        cart: payload
+      };
+
+    case 'REMOVEFROMCART':
+
+      return {
+        ...state,
+        cart: payload,
+
+      };
+
 
     case 'DISPLAY':
       return initialState;
 
 
     default:
+
       return state;
   }
 }
-export default categorySwitchboard;
