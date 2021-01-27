@@ -35,14 +35,22 @@ export const addToCart = (product) => {
   console.log(product);
   return {
     type: 'ADDTOCART',
-    payload: product.name
+    payload: product,
   }
 }
 
 export const removeFromCart = (product) => {
   return {
     type: 'REMOVEFROMCART',
-    payload: product.name
+    payload: product.name,
+  }
+}
+
+export const decreaseInStockAmount = (product) => {
+  console.log(product)
+  return {
+    type: 'DECREASESTOCK',
+    payload: product.inStock,
   }
 }
 
@@ -69,10 +77,12 @@ export default (state = initialState, action) => {
       };
 
     case 'ADDTOCART':
-
+      console.log(payload)
+      console.log(state.cart)
       return {
         ...state,
-        cart: payload
+        cart: [...state.cart, payload]
+        //this is replacing the array value not extending the arrays length
       };
 
     case 'REMOVEFROMCART':
@@ -83,6 +93,12 @@ export default (state = initialState, action) => {
 
       };
 
+      case 'DECREASESTOCK':
+
+      return {
+        ...state,
+        inStock: payload
+      }
 
     case 'DISPLAY':
       return initialState;

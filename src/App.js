@@ -24,7 +24,7 @@ function App() {
         <Products />
       </Container>
       <Container>
-        
+        <SimpleCart />
       </Container>
       <Footer />
     </div>

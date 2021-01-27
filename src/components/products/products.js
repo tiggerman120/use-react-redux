@@ -14,22 +14,23 @@ import Button from '@material-ui/core/Button';
 // import DraftsIcon from '@material-ui/icons/Drafts';
 // import Avatar from '@material-ui/core/Avatar';
 import Typography from '@material-ui/core/Typography';
-import categorySwitchboard, { showCategory, saveProducts, addToCart } from '../../store/categories';
+import categorySwitchboard, { showCategory, saveProducts, addToCart, decreaseInStockAmount } from '../../store/categories';
 
 
 
 
-const mapDispatchToProps = { addToCart, saveProducts };
+const mapDispatchToProps = { addToCart, saveProducts, decreaseInStockAmount };
 
 console.log();
 
 
 
 const Products = (props) => {
-  
+  console.log(props.cart)
     const clickHandler = (product) => {
       console.log(props, product);
       props.addToCart(product)
+      product.inStock--
     }
   console.log(props);
   const [production, setProducts] = useState([])
@@ -53,9 +54,9 @@ const Products = (props) => {
           console.log(product);
           return (
             <Card key={idx}>
-              {product.name}
+              product: {product.name} Price: ${product.price} In Stock: {product.inStock}
               <Button onClick={() =>
-                clickHandler()
+                clickHandler(product)
               }>add to cart!</Button>
             </Card>
           )
@@ -72,7 +73,7 @@ const mapStateToProps = state => ({
 
   products: state.categorySwitchboard.products,
   category: state.categorySwitchboard.activeCategory,
-  inStock: state.categorySwitchboard.cart,
+  cart: state.categorySwitchboard.cart,
 
 
 })
