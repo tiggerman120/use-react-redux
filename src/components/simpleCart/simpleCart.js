@@ -5,30 +5,53 @@ import ListItem from '@material-ui/core/ListItem';
 import Typography from '@material-ui/core/Typography';
 
 import { connect } from 'react-redux';
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
+import { removeFromCart, emptyCart } from '../../store/actions'
+const mapDispatchToProps = { removeFromCart, emptyCart }
 
 const SimpleCart = (props) => {
   console.log(props)
-
-  const handler = () => {
-
+//const [cartItem, setCartItem] = useState([]);
+  const handler = (product) => {
+    props.removeFromCart(product)
+    product.inStock++//this is a state mutation and should have an action+reducer to only update this property and then call it here
   }
-  useEffect(() => {
-    //i want 
-  })
+
+  const resetHandler = () => {
+    console.log(props)
+    props.emptyCart()
+  }
+  // useEffect(() => {
+  //   console.log(props)
+  //   //props.cart.forEach((item, idx) => {
+  //     // if(item.name === props.cart[idx]) {
+  //     //   props.
+  //     // }
+  //   })
+  //   //i want to update state using a foreach on the state array and update state with an if the payload strictly equals the product name in the array at index
+  // }, [props.products, props.cart])
   return (
     <List>
-      {props.cart.map(((product, idx) => {
-        console.log(product);
-        return (
-          <Container key={idx}>
-            <ListItem >
-              <Typography>{product.name}</Typography>
-              <Button>Remove</Button>
-            </ListItem>
-          </Container>
-        )
-      }))}
+      {props.cart ? (
+        props.cart.map(((product, idx) => {
+          console.log(props.cart)
+          return (
+            <Container key={idx}>
+              <ListItem >
+                <Typography>{product.name}</Typography>
+                <Button onClick={() => {
+                  handler(product)
+                }}>Remove</Button>
+              </ListItem>
+            </Container>
+          )
+        }))
+      )
+    :
+    null
+    }
+      {}
+    <Button onClick={() => {resetHandler()}}>empty cart</Button>
     </List>
   )
 }
@@ -42,4 +65,4 @@ const mapStateToProps = state => {
   }
 }
 
-export default connect(mapStateToProps)(SimpleCart);
+export default connect(mapStateToProps, mapDispatchToProps)(SimpleCart);

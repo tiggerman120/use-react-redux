@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { connect } from 'react-redux';
+
 import Container from '@material-ui/core/Container';
 import Card from '@material-ui/core/Card'
 import Button from '@material-ui/core/Button';
@@ -14,7 +15,7 @@ import Button from '@material-ui/core/Button';
 // import DraftsIcon from '@material-ui/icons/Drafts';
 // import Avatar from '@material-ui/core/Avatar';
 import Typography from '@material-ui/core/Typography';
-import categorySwitchboard, { showCategory, saveProducts, addToCart, decreaseInStockAmount } from '../../store/categories';
+import categorySwitchboard, { showCategory, saveProducts, addToCart, decreaseInStockAmount } from '../../store/actions';
 
 
 
@@ -34,14 +35,15 @@ const Products = (props) => {
     }
   console.log(props);
   const [production, setProducts] = useState([])
-  useEffect(() => {
-    const filterer = () => {
-      setProducts(props.products.filter(product =>
-        product.category === props.category
-      ))
-    }
-    filterer()
-  }, [props.category, props.products])
+  // useEffect(() => {
+  //   const filterer = () => {
+  //     setProducts(
+  //       props.products.filter(product =>
+  //       product.category === props.category
+  //     ))
+  //   }
+  //   filterer()
+  // }, [props.category, props.products])
 
   if (!props.products) {
     return <Typography>Select a category</Typography>

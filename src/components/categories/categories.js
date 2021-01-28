@@ -14,38 +14,49 @@ import InboxIcon from '@material-ui/icons/Inbox';
 import DraftsIcon from '@material-ui/icons/Drafts';
 import Avatar from '@material-ui/core/Avatar';
 import Typography from '@material-ui/core/Typography';
-import categorySwitchboard, { showCategory, saveProducts } from '../../store/categories'
+import categorySwitchboard, { showCategory, saveProducts, getRemoteCategories } from '../../store/actions'
 import { render } from 'react-dom';
 import products from '../products/products';
 //import Products from '../products/products'
 
-const mapDispatchToProps = { showCategory, saveProducts };
+const mapDispatchToProps = { showCategory, saveProducts, getRemoteCategories };
+
+
 
 const Categories = (props) => {
+  
   console.log(props)
   let clickHandler = (category) => {
     console.log('hitting the click event')
     props.saveProducts(category);
 
   }
-  // useEffect(() => {
-  //   showCategory()
-  // }, [props])
+  useEffect(() => {
+    console.log(`hitting use effect in categories`);
+    props.getRemoteCategories()
+  }, [])
+  console.log(props)
   return (
 
     <Container className={'class'}>
+      {props.categories ? (
+        props.categories.map((category, idx) => (
 
-      {props.categories.map((category, idx) => (
-
-        <Container key={idx}>
-
-          <Button onClick={() => {
-            clickHandler(category)
-            console.log(category)
-
-          }}>Name: {category.name}</Button>
-        </Container>
-      ))
+          <Container key={idx}>
+  
+            <Button onClick={() => {
+              
+              clickHandler(category)
+              console.log(category)
+  
+            }}>Name: {category.name}</Button>
+          </Container>
+        ))
+      )
+    :
+    null
+    }
+      {
       }
 
     </Container >

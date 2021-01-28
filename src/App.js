@@ -8,7 +8,12 @@ import MenuIcon from '@material-ui/icons/Menu';
 import Container from '@material-ui/core/Container';
 import Header from './components/header/header';
 import Footer from './components/footer/footer';
+import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
+
+
+
 function App() {
+ 
   return (
     <div className="App">
       <Toolbar>
@@ -23,9 +28,11 @@ function App() {
       <Container>
         <Products />
       </Container>
-      <Container>
-        <SimpleCart />
-      </Container>
+      <Router>
+        <Link to="/cart">Cart
+          <SimpleCart />
+        </Link>
+      </Router>
       <Footer />
     </div>
   );
