@@ -64,12 +64,14 @@ const Categories = (props) => {
 }
 
 const mapStateToProps = state => {
+  console.log(state)
   return {
-    categories: state.categorySwitchboard.categories,
+    categories: state.categorySwitchboard.categories.products,
     products: state.categorySwitchboard.products,
     activeCategory: state.categorySwitchboard.activeCategory,
   }
 }
+
 
 export default connect(mapStateToProps, mapDispatchToProps)(Categories);
 

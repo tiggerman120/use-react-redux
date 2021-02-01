@@ -1,7 +1,7 @@
 
 let axios = require('axios');
 let superagent = require('superagent');
-let api = 'https://garrett-basic-api-server-main.herokuapp.com/'
+let api = 'https://simonpanek-auth-api.herokuapp.com/api/v1/store'
 
 export const showCategory = () => {
   return {
@@ -49,17 +49,11 @@ export const emptyCart = (product) => {
   }
 }
 
-export const getRemoteCategories = () => async dispatch => {
-  const getter = superagent.get(`${api}food`)
-  console.log(getter.body);
-  dispatch(getAction(getter.body));
-
-    // .then(response => {
-    //   console.log(response)
-
-    //   // .then(res=>res.json())
-    //   //       .then(json=>console.log(json))
-    // });
+export const getRemoteCategories = () => dispatch => {
+  return superagent.get('https://simonpanek-auth-api.herokuapp.com/api/v1/store')
+    .then(response => {
+      dispatch(getAction({ products: response.body }));
+    });
 };
 
 export const getRemoteProducts = () => dispatch => {
