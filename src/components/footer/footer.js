@@ -4,7 +4,7 @@ function Footer(props) {
 
   return(
     <div>
-    <h2>Copyright: garrett2021 contact: 911</h2>
+    <h2>Copyright: garrett 2021 contact: 360</h2>
 
     </div>
 
